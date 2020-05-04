@@ -52,6 +52,7 @@ add_action('after_setup_theme', function () {
      * @see https://developer.wordpress.org/reference/functions/add_theme_support/
      * ------------------------------------------------------------------------------
      */
+    add_theme_support('custom-logo');
     add_theme_support('html5', ['comment-list', 'comment-form', 'search-form', 'gallery', 'caption']);
     add_theme_support('post-thumbnails');
     add_theme_support('responsive-embeds');
@@ -108,9 +109,9 @@ add_action('after_setup_theme', function () {
      * @see https://github.com/Horttcore/wp-assets
      * ------------------------------------------------------------------------------
      */
-    (new Script('theme', get_stylesheet_directory_uri() . '/dist/js/app.js', ['jquery'], true, true))->register();
-    (new Style('sanitize-css', get_stylesheet_directory_uri() . '/dist/vendor/sanitize-css/sanitize.css'))->register();
-    (new Style('theme', get_stylesheet_directory_uri() . '/dist/css/app.css', ['sanitize-css']))->register();
+    (new Script('theme', get_template_directory_uri() . '/dist/js/app.js', ['jquery'], true, true))->register();
+    (new Style('sanitize-css', get_template_directory_uri() . '/dist/vendor/sanitize-css/sanitize.css'))->register();
+    (new Style('theme', get_template_directory_uri() . '/dist/css/app.css', ['sanitize-css']))->register();
 
 
     /**
@@ -209,7 +210,7 @@ add_action('after_setup_theme', function () {
     add_filter('the_generator', '__return_null'); // Remove generator output
     add_filter('login_headerurl', 'home_url'); // Replace the login logo link with home url
     add_filter('wp_mail_from', function ($from) {
-        if (false !== strpos($default, 'wordpress@')) {
+        if (false !== strpos($from, 'wordpress@')) {
             return $from;
         }
         return get_option('admin_email');
